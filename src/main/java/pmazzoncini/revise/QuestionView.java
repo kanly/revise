@@ -5,7 +5,9 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class QuestionView extends VerticalLayout {
         }
         var question = questions.pop();
         add(new Text("Question " + questionNum + "/" + totalQuestions));
-        var questionLayout = new VerticalLayout();
+        var questionLayout = new HorizontalLayout();
         var dutch = new TextField("Dutch");
         dutch.setValue(question.dutch());
         dutch.setEnabled(false);
@@ -53,8 +55,7 @@ public class QuestionView extends VerticalLayout {
                 if (italian.getValue().equals(question.italian())) {
                     add(new Text("Correct! Awesome!"));
                 } else {
-                    add(new Text("Aw! Not correct, sorry!"));
-                    add(new Text("The correct answer was: " + question.italian()));
+                    add(new Text("Aw! Not correct, sorry!\nThe correct answer was: " + question.italian()));
                 }
                 add(new Button("next", event ->
                     createQuestion(questionNum + 1, totalQuestions, questions)
@@ -66,5 +67,7 @@ public class QuestionView extends VerticalLayout {
         button.setDisableOnClick(true);
 
         add(button);
+
+        addClassName("centered-content");
     }
 }
